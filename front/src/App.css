@@ -1,0 +1,11 @@
+.cardlist {
+  display: flex;
+  flex-wrap: nowrap; /* カードを横並びにする */
+  overflow-x: auto; /* 横スクロールが必要な場合にスクロールバーを表示 */
+  padding: 10px 20px;
+}
+
+.cardelem {
+  margin-right: 15px; /* カードの間隔を調整 */
+  height: auto;
+}
