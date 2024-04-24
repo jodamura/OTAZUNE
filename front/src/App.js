@@ -59,21 +59,26 @@ function App() {
       const name = document.getElementById("standard-required-name").value;
       const mailaddress = document.getElementById("standard-required-mail").value;
       const suggestion = proposalText;
-
+  
       const proposalData = {
         ID: selectedTour.ID,
         suggester: name,
         mailaddress: mailaddress,
         suggestion: suggestion,
       };
-
+  
       // FastAPIにポスト
       const response = await axios.post('http://localhost:8000/add_suggestion', proposalData);
       console.log(response.data);
+      
+      // 提案が正常に追加されたメッセージを表示
+      alert('ありがとうございます。提案が送信されました！');
+      handleClose();
     } catch (error) {
       console.error('Error posting proposal:', error);
     }
   };
+  
 
   return (
       <div className='container-fluid'>
