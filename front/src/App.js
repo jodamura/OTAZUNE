@@ -52,6 +52,29 @@ function App() {
     setProposalText(event.target.value);
   };
 
+  // 提案をポストする関数
+  const postProposal = async () => {
+    try {
+      // 入力された名前、メールアドレス、提案内容を取得
+      const name = document.getElementById("standard-required-name").value;
+      const mailaddress = document.getElementById("standard-required-mail").value;
+      const suggestion = proposalText;
+
+      const proposalData = {
+        ID: selectedTour.ID,
+        suggester: name,
+        mailaddress: mailaddress,
+        suggestion: suggestion,
+      };
+
+      // FastAPIにポスト
+      const response = await axios.post('http://localhost:8000/add_suggestion', proposalData);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error posting proposal:', error);
+    }
+  };
+
   return (
       <div className='container-fluid'>
         <h3>現在募集中の案件:{dataLength}件</h3>
@@ -151,38 +174,38 @@ function App() {
                     提案ページ
                   </Typography>
                   <Typography sx={{mb: 1.5}}>
-                    <TextField
-                      required
-                      id="standard-required"
-                      label="お名前"
-                      defaultValue=""
-                      variant="standard"
-                    />
+                  <TextField
+                    required
+                    id="standard-required-name"  // 名前の入力フィールドにidを追加
+                    label="お名前"
+                    defaultValue=""
+                    variant="standard"
+                  />
                   </Typography>
                   <Typography sx={{mb: 3}}>
-                    <TextField
-                      required
-                      id="standard-required"
-                      label="メールアドレス"
-                      defaultValue=""
-                      variant="standard"
-                    />
+                  <TextField
+                    required
+                    id="standard-required-mail"  // メールアドレスの入力フィールドにidを追加
+                    label="メールアドレス"
+                    defaultValue=""
+                    variant="standard"
+                  />
                   </Typography>
                   <Typography id="modal-modal-description" sx={{ mb: 2 }}>
-                    <TextField
-                      required
-                      id="standard-multiline-flexible"
-                      label="提案内容"
-                      multiline
-                      maxRows={8}
-                      fullWidth
-                      value={proposalText}
-                      onChange={handleProposalChange}
-                      variant="standard"
-                    />
+                  <TextField
+                    required
+                    id="standard-multiline-flexible"
+                    label="提案内容"
+                    multiline
+                    maxRows={8}
+                    fullWidth
+                    value={proposalText}
+                    onChange={handleProposalChange}
+                    variant="standard"
+                  />
                   </Typography>
                   <CardActions>
-                    <Button size="small" variant="contained" endIcon={<SendIcon />}>提案する</Button>
+                    <Button size="small" variant="contained" endIcon={<SendIcon />} onClick={postProposal}>提案する</Button>
                   </CardActions>
                 </>
               )}

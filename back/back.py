@@ -94,3 +94,34 @@ async def getdata():
     res = getalldata()
     return res
 
+@app.post("/add_suggestion")
+async def add_suggestion(suggestion_data: dict):
+    # データベースに接続
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    try:
+        # 新しい提案の情報を提供
+        new_sug = {
+            'ID': suggestion_data.get('ID'),
+            'suggester': suggestion_data.get('suggester'),
+            'mailaddress': suggestion_data.get('mailaddress'),
+            'suggestion': suggestion_data.get('suggestion')
+        }
+
+        # 新しい提案をデータベースに挿入
+        sql = "INSERT INTO `suggestion_db` (`ID`, `suggester`, `mailaddress`, `suggestion`) VALUES (%(ID)s, %(suggester)s, %(mailaddress)s, %(suggestion)s)"
+        cursor.execute(sql, new_sug)
+        # コミットを実行して変更を保存
+        connection.commit()
+        return {"message": "提案が正常に追加されました。"}
+
+    except mysql.connector.Error as error:
+        # エラーが発生した場合、トランザクションをロールバック
+        connection.rollback()
+        return {"error": f"エラー: {error}"}
+
+    finally:
+        # cursorを閉じる
+        cursor.close()
+        # データベース接続を閉じる
+        connection.close()

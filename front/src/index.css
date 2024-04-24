@@ -5,3 +5,67 @@ body{
   color: white;
   background-color: #363636;
 }
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: #4b5564;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000;
+}
+
+hr {
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer {
+  padding: 2rem 2rem 1rem 2rem;
+  font-size: 0.8rem;
+  color: #363636;
+  background:#FFF;
+}
+
+.footer__navi-heading {
+  font-weight: 600;
+}
+
+.footer__logo {
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+.footer__navi li {
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .md-flex {
+    display: flex;
+  }
+
+  .md-justify-between {
+    justify-content: space-between;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+address {
+  font-style: normal;
+}
