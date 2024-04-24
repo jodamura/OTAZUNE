@@ -84,6 +84,20 @@ def getalldata():
     connection.close()
     return results
 
+def getsugdata(elemid):
+    # データベースに接続
+    connection = get_db_connection()
+    
+    # 辞書形式で結果を取得するためのcursorの作成
+    cursor = connection.cursor(dictionary=True)
+    sql = "SELECT * FROM `suggestion_db` WHERE `ID`=%s"
+    cursor.execute(sql,(elemid,))
+    results = cursor.fetchall()
+    # cursorを閉じる
+    cursor.close()
+    # データベース接続を閉じる
+    connection.close()
+    return results
 
 ########################################################
 # 下記インスタンス
@@ -92,6 +106,11 @@ def getalldata():
 @app.get("/")
 async def getdata():
     res = getalldata()
+    return res
+
+@app.get("/getsug/{elemid}")
+async def getsuggestiondata(elemid:int):
+    res = getsugdata(elemid)
     return res
 
 @app.post("/add_suggestion")
